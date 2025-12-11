@@ -1,32 +1,62 @@
-# KLANS — Pilot Phase
+Here is a **clean README.md** for the **KLANS Turborepo Monorepo**, including:
 
-This repository contains the **KLANS pilot application setup**, serving as the foundation for our community-as-a-service platform. This will evolve through multiple phases and updates until the final production-ready version.
+* Project intro
+* Tech stack
+* Folder structure
+* Requirements
+* Install steps
+* Dev workflow
+* Build & deploy basics
 
----
-
-## Project Overview
-
-KLANS is envisioned as a platform where users can discover, join, and engage with hyperlocal or interest-based communities — powered by real-time updates, events, discussions, member profiles, and seamless onboarding.
-
-Pilot objectives:
-- Establish a working backend structure.
-- Create core models based on the finalized schema.
-- Implement OTP-based authentication.
-- Set up MongoDB Atlas for cloud database.
-- Prepare for front-end integration (React Native).
+You can copy–paste this directly into your repo as `README.md`.
 
 ---
 
-## Tech Stack
+# 📘 **KLANS — Monorepo (Turborepo)**
 
-- **Backend**: Node.js (Express)
-- **Database**: MongoDB (Atlas for cloud deployment)
-- **Authentication**: OTP-based login
-- **Version Control**: Git + GitHub
+KLANS is a location-based community platform with:
+
+* Web app (Next.js + Tailwind)
+* Mobile app (Expo)
+* Backend (Next.js App Router API)
+* Shared packages (types, utils, db schema, services)
+* Notifications (OneSignal)
+
+This monorepo uses **Turborepo + PNPM workspaces** for scalable development.
 
 ---
 
-## Project Structure
+## 🚀 **Tech Stack**
+
+### **Monorepo & Tooling**
+
+* Turborepo
+* PNPM workspaces
+* TypeScript
+
+### **Backend**
+
+* Next.js App Router (API Routes)
+* MySQL
+* Prisma (optional)
+
+### **Frontend (Web)**
+
+* Next.js
+* TailwindCSS
+
+### **Mobile**
+
+* Expo (React Native)
+* Expo Router
+
+### **Notifications**
+
+* OneSignal
+
+---
+
+## 📁 **Folder Structure**
 
 ```
 klans/
@@ -34,7 +64,7 @@ klans/
 ├── apps/
 │   ├── backend/
 │   │   └── src/
-│   │       ├── app/
+│   │       ├── app/            # API endpoints
 │   │       ├── lib/
 │   │       ├── middlewares/
 │   │       ├── services/
@@ -60,16 +90,16 @@ klans/
 │
 ├── packages/
 │   ├── ui/
-│   │   ├── react/
-│   │   ├── native/
+│   │   ├── react/              # shared UI for web
+│   │   ├── native/             # shared UI for mobile
 │   │   └── index.ts
 │   │
 │   ├── db/
-│   │   ├── schema/
+│   │   ├── schema/             # prisma schema or SQL scripts
 │   │   └── index.ts
 │   │
 │   ├── types/
-│   │   └── index.ts
+│   │   └── index.ts            # global TS types
 │   │
 │   ├── utils/
 │   │   └── index.ts
@@ -80,8 +110,8 @@ klans/
 │   │   └── index.ts
 │   │
 │   └── services/
-│       ├── api-client/
-│       └── notifications/
+│       ├── api-client/         # shared API client (web + mobile)
+│       └── notifications/      # OneSignal wrapper
 │
 ├── infra/
 │   ├── docker/
@@ -91,61 +121,110 @@ klans/
 ├── .gitignore
 ├── package.json
 ├── turbo.json
+├── pnpm-workspace.yaml
 ├── tsconfig.base.json
 └── README.md
-
 ```
 
 ---
 
-## Setup Instructions
+## 🧩 **Prerequisites**
 
-### 1. Install Dependencies
-```
-npm install
-```
+Install:
 
-### 2. Environment Variables
-Create `.env` file with:
-```
-PORT=5000
-MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/klans?retryWrites=true&w=majority
-JWT_SECRET=your_jwt_secret
-```
+* Node.js **18+ or 20+**
+* PNPM
+* Git
 
-### 3. Run Server
-```
-npx nodemon server.js
-```
+Commands:
 
-### 4. GitHub Setup
 ```
-git init
-git add .
-git commit -m "Initial KLANS pilot setup"
-git branch -M main
-git remote add origin <github-repo-url>
-git push -u origin main
+npm install -g pnpm
 ```
 
 ---
 
-## Next Steps
+## 🔧 **Initial Setup**
 
-1. Implement all models based on finalized schema.
-2. Build authentication APIs.
-3. Implement CRUD APIs for klans, categories, posts, comments, and events.
-4. Integrate admin dashboard and moderation tools.
-5. Connect with React Native frontend.
+### 1️⃣ Install dependencies
+
+```
+pnpm install
+```
+
+### 2️⃣ Install Turborepo
+
+```
+pnpm add -D turbo
+```
 
 ---
 
-## Notes
-- This repository will be continuously updated through the KLANS pilot phase.
-- MongoDB Atlas free tier is used for development.
+## ▶️ **Running the Monorepo (Dev Mode)**
+
+Start all apps together:
+
+```
+pnpm dev
+```
+
+Start a single app:
+
+```
+cd apps/web
+pnpm dev
+```
 
 ---
 
-## Contact
-For questions or contributions, contact: **Sumit Kaila**
+## 🏗 **Build All Apps**
+
+```
+pnpm build
+```
+
+---
+
+## 🚀 **Start Production**
+
+```
+pnpm start
+```
+
+---
+
+## 📦 **Shared Packages**
+
+All shared code lives in:
+
+```
+packages/types
+packages/utils
+packages/db
+packages/services
+packages/ui
+packages/config
+```
+
+These can be imported as:
+
+```
+import { User } from "@klans/types"
+import { api } from "@klans/api-client"
+```
+
+---
+
+## 🔔 **Notifications**
+
+OneSignal handlers are inside:
+
+```
+packages/services/notifications
+```
+
+Used by:
+
+* Backend (server triggers)
+* Mobile (client tokens)
 
