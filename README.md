@@ -31,29 +31,69 @@ Pilot objectives:
 ```
 klans/
 │
-├── models/        # MongoDB Mongoose schemas
-│   ├── user.js
-│   ├── otp.js
-│   ├── klan.js
-│   ├── category.js
-│   ├── cluster.js
-│   ├── post.js
-│   ├── comment.js
-│   ├── event.js
-│   └── moderation.js
+├── apps/
+│   ├── backend/
+│   │   └── src/
+│   │       ├── app/
+│   │       ├── lib/
+│   │       ├── middlewares/
+│   │       ├── services/
+│   │       ├── db/
+│   │       ├── utils/
+│   │       └── types/
+│   │
+│   ├── web/
+│   │   └── src/
+│   │       ├── app/
+│   │       ├── components/
+│   │       ├── hooks/
+│   │       ├── styles/
+│   │       └── utils/
+│   │
+│   └── mobile/
+│       ├── app/
+│       ├── components/
+│       ├── screens/
+│       ├── services/
+│       ├── constants/
+│       └── assets/
 │
-├── routes/        # API endpoints
-│   ├── auth.js
-│   ├── klan.js
-│   ├── category.js
-│   └── post.js
+├── packages/
+│   ├── ui/
+│   │   ├── react/
+│   │   ├── native/
+│   │   └── index.ts
+│   │
+│   ├── db/
+│   │   ├── schema/
+│   │   └── index.ts
+│   │
+│   ├── types/
+│   │   └── index.ts
+│   │
+│   ├── utils/
+│   │   └── index.ts
+│   │
+│   ├── config/
+│   │   ├── onesignal/
+│   │   ├── mysql/
+│   │   └── index.ts
+│   │
+│   └── services/
+│       ├── api-client/
+│       └── notifications/
 │
-├── controllers/   # Route logic
+├── infra/
+│   ├── docker/
+│   ├── env/
+│   └── scripts/
 │
-├── .env           # Environment variables
-├── server.js      # Entry point
+├── .gitignore
 ├── package.json
+├── turbo.json
+├── tsconfig.base.json
 └── README.md
+
 ```
 
 ---
