@@ -1,20 +1,19 @@
-import mysql from 'mysql2/promise';
+import { NextResponse } from 'next/server';
+import { getAllUsers } from '@/db/queries/users';
 
-async function test() {
+export async function GET() {
   try {
-    const connection = await mysql.createConnection({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      port: Number(process.env.DB_PORT || 3306),
+    const users = await getAllUsers();
+
+    return NextResponse.json({
+      success: true,
+      users,
     });
-    const [rows] = await connection.execute('SELECT NOW() AS now');
-    console.log(rows);
-    await connection.end();
-  } catch (err) {
-    console.error('Connection failed:', err);
+  } catch (error) {
+    console.error('Get users error:', error);
+    return NextResponse.json(
+      { success: false, error: 'Failed to fetch users' },
+      { status: 500 }
+    );
   }
 }
-
-test();
