@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { deleteUser, getUserById, updateUser } from '@/db/queries/users';
+import { getUserById, hardDeleteUser, restoreUser, softDeleteUser, updateUser } from '@/db/queries/users';
 
 type Params = {
     id: string;
@@ -70,33 +70,78 @@ export async function PUT(
 
 // delete user by ID
 
+// make use inatcive 
+
 export async function DELETE(
-    _req: NextRequest,
-    context: { params: Promise<Params> }
+    req: Request,
+    context: { params: Promise<{ id: string }> }
   ) {
     try {
       const { id } = await context.params;
+      const { searchParams } = new URL(req.url);
   
-      const existingUser = await getUserById(id);
-      if (!existingUser) {
+      const force = searchParams.get('force') === 'true';
+  
+      const user = await getUserById(id);
+      if (!user) {
         return NextResponse.json(
           { success: false, error: 'User not found' },
           { status: 404 }
         );
       }
   
-      await deleteUser(id);
+      if (force) {
+        await hardDeleteUser(id);
+        return NextResponse.json({
+          success: true,
+          message: 'User permanently deleted',
+        });
+      }
   
+      await softDeleteUser(id);
       return NextResponse.json({
         success: true,
-        deleted_user_id: id,
+        message: 'User deactivated',
       });
     } catch (error) {
       console.error('Delete user error:', error);
       return NextResponse.json(
-        { success: false, error: 'Failed to delete user' },
+        { success: false, error: 'Delete failed' },
         { status: 500 }
       );
     }
   }
 
+
+
+// restore user 
+
+export async function PATCH(
+    _req: Request,
+    context: { params: Promise<{ id: string }> }
+  ) {
+    try {
+      const { id } = await context.params;
+  
+      const user = await getUserById(id);
+      if (!user) {
+        return NextResponse.json(
+          { success: false, error: 'User not found' },
+          { status: 404 }
+        );
+      }
+  
+      await restoreUser(id);
+  
+      return NextResponse.json({
+        success: true,
+        message: 'User restored successfully',
+      });
+    } catch (error) {
+      console.error('Restore user error:', error);
+      return NextResponse.json(
+        { success: false, error: 'Restore failed' },
+        { status: 500 }
+      );
+    }
+  }

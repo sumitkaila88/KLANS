@@ -74,6 +74,27 @@ export async function updateUser(
 
 //delete user 
 
-export async function deleteUser(user_id: string) {
+export async function hardDeleteUser(user_id: string) {
   return db.delete(users).where(eq(users.user_id, user_id));
+}
+
+// make user inactive 
+export async function softDeleteUser(user_id: string) {
+  return db
+    .update(users)
+    .set({
+      is_active: false,
+    })
+    .where(eq(users.user_id, user_id));
+}
+
+//restore user
+
+export async function restoreUser(user_id: string) {
+  return db
+    .update(users)
+    .set({
+      is_active: true,
+    })
+    .where(eq(users.user_id, user_id));
 }
