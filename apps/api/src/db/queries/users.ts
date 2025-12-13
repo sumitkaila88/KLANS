@@ -37,7 +37,10 @@ export async function createUser(data: CreateUserInput) {
 
 // GET ALL
 export async function getAllUsers() {
-  return db.select().from(users);
+  return db
+    .select()
+    .from(users)
+    .where(eq(users.is_active, true));
 }
 
 // GET BY ID
@@ -97,4 +100,13 @@ export async function restoreUser(user_id: string) {
       is_active: true,
     })
     .where(eq(users.user_id, user_id));
+}
+
+//get inactive users
+
+export async function getInactiveUsers() {
+  return db
+    .select()
+    .from(users)
+    .where(eq(users.is_active, false));
 }
