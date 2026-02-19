@@ -1,50 +1,71 @@
-# Welcome to your Expo app 👋
+# Mobile App Setup
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Authentication Flow
 
-## Get started
+1. **Splash Screen** - Shows on app launch with welcome animation
+2. **Login Screen** - OTP-based authentication (phone number)
+3. **Main App** - Protected routes after authentication
 
-1. Install dependencies
+## Features
 
-   ```bash
-   npm install
-   ```
+- ✅ Splash screen with smooth animations
+- ✅ OTP-based login (phone number)
+- ✅ Secure token storage using Expo SecureStore
+- ✅ Auth context for state management
+- ✅ Protected routes with automatic navigation
+- ✅ Token refresh handling
 
-2. Start the app
+## Environment Variables
 
-   ```bash
-   npx expo start
-   ```
+Create a `.env` file in `apps/mobile/`:
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```env
+EXPO_PUBLIC_API_URL=http://localhost:3001
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+For iOS Simulator, use:
+```env
+EXPO_PUBLIC_API_URL=http://localhost:3001
+```
 
-## Learn more
+For Android Emulator, use:
+```env
+EXPO_PUBLIC_API_URL=http://10.0.2.2:3001
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+For physical device, use your computer's IP:
+```env
+EXPO_PUBLIC_API_URL=http://192.168.1.XXX:3001
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Running the App
 
-## Join the community
+```bash
+# Install dependencies
+pnpm install
 
-Join our community of developers creating universal apps.
+# Start the development server
+pnpm --filter mobile start
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+# Run on iOS
+pnpm --filter mobile ios
+
+# Run on Android
+pnpm --filter mobile android
+```
+
+## Customizing Splash Screen
+
+The splash screen design can be customized in `app/splash.tsx`. You can:
+- Replace the logo with your own image
+- Change colors and styling
+- Adjust animation timing
+- Add your branding elements
+
+## Customizing Login Screen
+
+The login screen can be customized in `app/login.tsx`. You can:
+- Update colors and styling to match your brand
+- Add email option alongside phone
+- Customize OTP input appearance
+- Add additional validation

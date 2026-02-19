@@ -1,11 +1,17 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/db/client';
 
+/**
+ * Auth endpoint info
+ */
 export async function GET() {
-  try {
-    const [rows] = await db.execute('SELECT NOW() AS now');
-    return NextResponse.json({ success: true, data: rows });
-  } catch (err) {
-    return NextResponse.json({ success: false, error: (err as Error).message });
-  }
+  return NextResponse.json({
+    success: true,
+    message: 'Authentication API',
+    endpoints: {
+      'POST /api/auth/send-otp': 'Send OTP to phone or email',
+      'POST /api/auth/verify-otp': 'Verify OTP and get tokens',
+      'POST /api/auth/refresh': 'Refresh access token',
+      'GET /api/auth/me': 'Get current authenticated user',
+    },
+  });
 }

@@ -1,12 +1,17 @@
 {
-  "name": "services",
+  "name": "@klans/services",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Shared API client and services",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "check-types": "tsc --noEmit"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "@klans/types": "workspace:*",
+    "@klans/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
 }

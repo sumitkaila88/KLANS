@@ -1,7 +1,8 @@
-import { NextResponse } from 'next/server';
-import { getAllUsers } from '@/db/queries/users';
+import { NextRequest, NextResponse } from 'next/server';
+import { getAllUsers } from '@klans/db';
+import { withAuth } from '@/middleware/auth';
 
-export async function GET() {
+async function handler(_req: NextRequest) {
   try {
     const users = await getAllUsers();
 
@@ -17,3 +18,5 @@ export async function GET() {
     );
   }
 }
+
+export const GET = withAuth(handler);

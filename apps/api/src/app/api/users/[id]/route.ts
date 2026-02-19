@@ -1,15 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUserById, hardDeleteUser, restoreUser, softDeleteUser, updateUser } from '@/db/queries/users';
+import { getUserById, hardDeleteUser, restoreUser, softDeleteUser, updateUser } from '@klans/db';
+import { withAuth } from '@/middleware/auth';
 
 type Params = {
     id: string;
 };
   
 //Get User
-export async function GET(
+const getHandler = async (
     _req: NextRequest,
-    context: { params: Params }
-) {
+    context: { params: Promise<Params> }
+) => {
     try {
     const { id } = await context.params;
 
@@ -33,14 +34,16 @@ export async function GET(
         { status: 500 }
     );
     }
-}
+};
+
+export const GET = withAuth(getHandler);
 
 //Edit user by ID
 
-export async function PUT(
+const putHandler = async (
     req: NextRequest,
     context: { params: Promise<Params> }
-) {
+) => {
     try {
       const { id } = await context.params;
       const data = await req.json();
@@ -66,16 +69,18 @@ export async function PUT(
         { status: 500 }
       );
     }
-}
+};
+
+export const PUT = withAuth(putHandler);
 
 // delete user by ID
 
-// make use inatcive 
+// make use inactive 
 
-export async function DELETE(
-    req: Request,
+const deleteHandler = async (
+    req: NextRequest,
     context: { params: Promise<{ id: string }> }
-  ) {
+  ) => {
     try {
       const { id } = await context.params;
       const { searchParams } = new URL(req.url);
@@ -110,16 +115,16 @@ export async function DELETE(
         { status: 500 }
       );
     }
-  }
+  };
 
-
+export const DELETE = withAuth(deleteHandler);
 
 // restore user 
 
-export async function PATCH(
-    _req: Request,
+const patchHandler = async (
+    _req: NextRequest,
     context: { params: Promise<{ id: string }> }
-  ) {
+  ) => {
     try {
       const { id } = await context.params;
   
@@ -144,4 +149,6 @@ export async function PATCH(
         { status: 500 }
       );
     }
-  }
+  };
+
+export const PATCH = withAuth(patchHandler);

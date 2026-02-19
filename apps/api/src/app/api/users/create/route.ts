@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createUser } from '@/db/queries/users';
+import { createUser } from '@klans/db';
+import { withAuth } from '@/middleware/auth';
 
-export async function POST(req: NextRequest) {
+const handler = async (req: NextRequest) => {
   try {
     const data = await req.json();
 
@@ -25,4 +26,6 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
-}
+};
+
+export const POST = withAuth(handler);

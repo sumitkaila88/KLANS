@@ -1,12 +1,14 @@
 {
-  "name": "config",
+  "name": "@klans/config",
   "version": "1.0.0",
-  "description": "",
+  "description": "Shared configuration files",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "files": [
+    "eslint.base.js",
+    "tsconfig.base.json"
+  ],
+  "devDependencies": {
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.2"
+  }
 }

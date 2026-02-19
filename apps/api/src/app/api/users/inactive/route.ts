@@ -1,7 +1,8 @@
-import { NextResponse } from 'next/server';
-import { getInactiveUsers } from '@/db/queries/users';
+import { NextRequest, NextResponse } from 'next/server';
+import { getInactiveUsers } from '@klans/db';
+import { withAuth } from '@/middleware/auth';
 
-export async function GET() {
+const handler = async (_req: NextRequest) => {
   try {
     const users = await getInactiveUsers();
 
@@ -16,4 +17,6 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+};
+
+export const GET = withAuth(handler);
